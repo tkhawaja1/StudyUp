@@ -84,6 +84,7 @@ class EventServiceImplTest {
 		Event event = null;
 		Assertions.assertThrows(StudyUpException.class, () -> {
 			eventServiceImpl.updateEvent(event);
+			
 		});
 	}
 
