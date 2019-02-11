@@ -95,22 +95,20 @@ class EventServiceImplTest {
 	
 	//Second failure in get active events
 	// one bug found in Get Active Events, it should not get past events
-	// only active events should be collected
+	// only active events should be collected, not past events
 	@Test
 	void testGetActiveEvents_old_bad() {
 		Event event2 = new Event();
 		event2.setEventID(2);
-		event2.setDate(new Date(2050));
+		event2.setDate(new Date(2000));
 		event2.setName("Event 2");
 		Location location = new Location(-120, 35);
 		event2.setLocation(location);
 		List<Student> eventStudents = new ArrayList<>();
 		event2.setStudents(eventStudents);
 		DataStorage.eventData.put(event2.getEventID(), event2);
-		int eventID=2;
 		eventServiceImpl.getActiveEvents();
-		assertEquals(1, DataStorage.eventData.get(eventID).getDate());
-		//it gets a date sometime in 1969
+		assertFalse(eventServiceImpl.getActiveEvents().contains(event2));
 	}
 
 	//Third failure in add students to event
@@ -182,9 +180,8 @@ class EventServiceImplTest {
 		List<Student> eventStudents = new ArrayList<>();
 		event2.setStudents(eventStudents);
 		DataStorage.eventData.put(event2.getEventID(), event2);
-		int eventID=2;
 		eventServiceImpl.getPastEvents();
-		assertEquals(69, DataStorage.eventData.get(eventID).getDate().getYear());
+		assertTrue(eventServiceImpl.getActiveEvents().contains(event2));
 	}
 	
 	
