@@ -169,7 +169,6 @@ class EventServiceImplTest {
 	
 	//Check if it get the old events
 	@Test
-	@Deprecated
 	void testGetPastEvents_oldevents() {
 		Event event2 = new Event();
 		event2.setEventID(2);
